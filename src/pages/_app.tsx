@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
       <Provider store={ store }>
         <ThemeProvider>
           <NotificationList />
-          { /* <Header /> */ }
+          <Header />
           <Component { ...pageProps } />
           <Footer />
         </ThemeProvider>
