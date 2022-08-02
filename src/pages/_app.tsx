@@ -34,10 +34,10 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
       </Head>
       <Provider store={ store }>
         <ThemeProvider>
-          { /* <NotificationList /> */ }
-          { /* <Header /> */ }
+          <NotificationList />
+          <Header />
           <Component { ...pageProps } />
-          { /* <Footer /> */ }
+          <Footer />
         </ThemeProvider>
       </Provider>
     </>

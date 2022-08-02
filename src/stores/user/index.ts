@@ -1,3 +1,3 @@
-export { default as user } from './user.reducer';
-export * from './user.actions';
-export * from './user.dispatchers';
+export { default as user } from './userSlice';
+export * from './userSlice';
+export * from './userDispatcher';

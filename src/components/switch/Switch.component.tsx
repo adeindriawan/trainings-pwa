@@ -14,6 +14,7 @@ export default function Switch({ id, className, ...inputProps }: SwitchProps): J
         id={ id }
         type="checkbox"
         className={ styles.input }
+        disabled={ false }
       />
       <label htmlFor={ id } className={ styles.switch } />
     </div>

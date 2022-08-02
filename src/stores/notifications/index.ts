@@ -1,2 +1,2 @@
-export { default as notifications } from './notifications.reducer';
-export * from './notifications.actions';
+export { default as notifications } from './notificationSlice';
+export * from './notificationSlice';

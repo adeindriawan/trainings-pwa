@@ -1,28 +1,22 @@
-import {
-  createStore,
-  compose,
-  combineReducers,
-  applyMiddleware,
-  Action
-} from 'redux';
+import { Action, applyMiddleware, combineReducers, configureStore } from '@reduxjs/toolkit';
 import thunk, { ThunkAction } from 'redux-thunk';
 import { getWindowProperty } from 'utils/browser';
-import { user } from 'stores/user';
-import { notifications } from 'stores/notifications';
-import { pages } from 'stores/pages';
+import { user } from './user';
+import { notifications } from './notifications';
+import { pages } from './pages';
 
-const reducers = combineReducers({
-  user,
+const reducer = combineReducers({
   notifications,
+  user,
   pages
 });
 
-export type RootState = ReturnType<typeof reducers>
+export type RootState = ReturnType<typeof reducer>;
 export type AppThunk<ReturnType = void> = ThunkAction<
-    ReturnType,
-    RootState,
-    unknown,
-    Action<string>
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
 >
 
 const middleware = [applyMiddleware(thunk)];
@@ -33,7 +27,13 @@ if (devtools) {
   middleware.push(devtools());
 }
 
-export default createStore(
-  reducers,
-  compose(...middleware)
-);
+export const store = configureStore({
+  reducer
+});
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+// export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch
+
+export default store;

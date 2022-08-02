@@ -1,3 +1,3 @@
-export { default as pages } from './pages.reducer';
-export * from './pages.actions';
-export * from './pages.dispatchers';
+export { default as pages } from './pageSlice';
+export * from './pageSlice';
+export * from './pageDispatcher';
