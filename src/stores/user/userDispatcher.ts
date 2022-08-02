@@ -1,4 +1,4 @@
-import { AppThunk } from 'stores/indexx';
+import { AppThunk } from 'stores';
 import { executeGet } from 'utils/request';
 import { updateUser } from './userSlice';
 
