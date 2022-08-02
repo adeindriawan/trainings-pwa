@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Head from 'next/head';
 import {
   Container,
   Grid
@@ -10,19 +10,24 @@ function Trainings(): JSX.Element {
   
   return (
     <>
-      <Container maxWidth="lg">
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="stretch"
-          spacing={ 3 }
-        >
-          <Grid item xs={ 12 }>
-            <TrainingCard />
+      <Head>
+        <title>Trainings</title>
+      </Head>
+      <main>
+        <Container maxWidth="lg">
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="stretch"
+            spacing={ 3 }
+          >
+            <Grid item xs={ 12 }>
+              <TrainingCard />
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      </main>
     </>
   );
 }
