@@ -4,11 +4,13 @@ import { getWindowProperty } from 'utils/browser';
 import { user } from './user';
 import { notifications } from './notifications';
 import { pages } from './pages';
+import { trainings } from './trainings';
 
 const reducer = combineReducers({
   notifications,
   user,
-  pages
+  pages,
+  trainings
 });
 
 export type RootState = ReturnType<typeof reducer>;

@@ -18,3 +18,5 @@ export const theme = {
  * https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html
  */
 export const statusBarStyle = 'black-translucent';
+
+export const backendUrl = process.env.NODE_ENV === 'development' ? 'http://academy.beta/api' : 'https://academy.itsteknosains.co.id/api';

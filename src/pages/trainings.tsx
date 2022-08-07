@@ -5,9 +5,12 @@ import {
   Grid
 } from '@mui/material';
 import TrainingCard from 'components/trainings';
+import { useTraining } from 'hooks/training';
 
 function Trainings(): JSX.Element {
   
+  const dummyTraining = useTraining();
+
   return (
     <>
       <Head>
@@ -15,15 +18,18 @@ function Trainings(): JSX.Element {
       </Head>
       <main>
         <Container maxWidth="lg">
-          <Grid
-            container
-            direction="row"
-            justifyContent="center"
-            alignItems="stretch"
-            spacing={ 3 }
-          >
+          <Grid sx={ { flexGrow: 1 } } container spacing={ 1 }>
             <Grid item xs={ 12 }>
-              <TrainingCard />
+              <Grid container justifyContent="center" spacing={ 1 }>
+                { dummyTraining.map(v => (
+                  <Grid key={ v.id } item>
+                    <TrainingCard
+                      title={ v.name }
+                      shortDetail={ v.shortDetail }
+                    />
+                  </Grid>
+                )) }
+              </Grid>
             </Grid>
           </Grid>
         </Container>
