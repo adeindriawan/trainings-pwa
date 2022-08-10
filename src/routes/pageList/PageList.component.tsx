@@ -16,7 +16,7 @@ export default function PageList(): JSX.Element {
         <title>Page List</title>
       </Head>
       <main className={ pageList }>
-        <h1>Pages</h1>
+        <h1>Sign Up</h1>
         <p>
                     Do you also think this lack of content looks sad?<br />
                     Feel free to contribute by going to our GitHub repo and creating a pull-request,<br />

@@ -1,9 +1,9 @@
 import home from './home.html';
-import whyPwa from './why-pwa.html';
-import getStarted from './get-started.html';
+import register from './register.html';
+import login from './login.html';
 
 export default {
   'home': home,
-  'why-pwa': whyPwa,
-  'get-started': getStarted
+  'register': register,
+  'login': login
 };

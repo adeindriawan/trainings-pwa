@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import {
   Avatar,
-  Card,
   CardActions,
   CardContent,
   CardHeader,
@@ -46,7 +45,7 @@ function TrainingCard({ title, shortDetail }: { title: string, shortDetail: stri
   };
 
   return (
-    <Card sx={ { maxWidth: 345 } }>
+    <>
       <CardHeader
         avatar={
           <Avatar sx={ { bgcolor: red[500] } } aria-label="recipe">
@@ -125,7 +124,7 @@ function TrainingCard({ title, shortDetail }: { title: string, shortDetail: stri
           </Typography>
         </CardContent>
       </Collapse>
-    </Card>
+    </>
   );
 }
 

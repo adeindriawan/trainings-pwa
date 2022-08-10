@@ -2,11 +2,13 @@ import { Action, applyMiddleware, combineReducers, configureStore } from '@redux
 import thunk, { ThunkAction } from 'redux-thunk';
 import { getWindowProperty } from 'utils/browser';
 import { user } from './user';
+import { app } from './app';
 import { notifications } from './notifications';
 import { pages } from './pages';
 import { trainings } from './trainings';
 
 const reducer = combineReducers({
+  app,
   notifications,
   user,
   pages,

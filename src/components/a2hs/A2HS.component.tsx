@@ -24,94 +24,94 @@ type InstallState = {
 }
 
 export default class A2HS extends PureComponent<unknown, InstallState> {
-    state = {
-      isOpen: (
+  state = {
+    isOpen: (
       // If PWA prompt exists.
-        !!getWindowProperty().pwaInstallPrompt
+      !!getWindowProperty().pwaInstallPrompt
             || (
-        // Or is iOS and isn't installed.
+      // Or is iOS and isn't installed.
               isMobile.iOS()
                 && !checkMediaProperty(DISPLAY_STANDALONE)
             )
-      )
-    };
+    )
+  };
 
-    componentDidMount(): void {
-      const isAppStandalone = checkMediaProperty(DISPLAY_STANDALONE);
-      const isClosed = browserStorage.getItem(A2HS_IDENTIFIER);
+  componentDidMount(): void {
+    const isAppStandalone = checkMediaProperty(DISPLAY_STANDALONE);
+    const isClosed = browserStorage.getItem(A2HS_IDENTIFIER);
 
-      if (!isAppStandalone && !isClosed) {
-        (self as any).onbeforeinstallprompt = this.installListener;
-      }
+    if (!isAppStandalone && !isClosed) {
+      (self as any).onbeforeinstallprompt = this.installListener;
+    }
+  }
+
+  dismissNotification = (): void => {
+    this.setState({ isOpen: false });
+
+    browserStorage.setItem(
+      A2HS_IDENTIFIER,
+      true,
+      NOTIFICATION_IGNORE_TIME
+    );
+  };
+
+  installListener = (event: BeforeInstallPromptEvent): void => {
+    event.preventDefault();
+
+    self.pwaInstallPrompt = event;
+    this.setState({ isOpen: true });
+  };
+
+  install = (): void => {
+    if (!self.pwaInstallPrompt) {
+      return;
     }
 
-    dismissNotification = (): void => {
-      this.setState({ isOpen: false });
-
-      browserStorage.setItem(
-        A2HS_IDENTIFIER,
-        true,
-        NOTIFICATION_IGNORE_TIME
-      );
-    }
-
-    installListener = (event: BeforeInstallPromptEvent): void => {
-      event.preventDefault();
-
-      self.pwaInstallPrompt = event;
-      this.setState({ isOpen: true });
-    }
-
-    install = (): void => {
-      if (!self.pwaInstallPrompt) {
-        return;
-      }
-
-      self.pwaInstallPrompt.prompt();
-      self.pwaInstallPrompt.userChoice.then(
-        choice => {
-          if (choice.outcome === InstallAccepted) {
-            this.setState({ isOpen: false });
-          }
+    self.pwaInstallPrompt.prompt();
+    self.pwaInstallPrompt.userChoice.then(
+      choice => {
+        if (choice.outcome === InstallAccepted) {
+          this.setState({ isOpen: false });
         }
-      );
-    }
-
-    render(): JSX.Element | null {
-      const { isOpen } = this.state;
-
-      if (!isOpen) {
-        return null;
       }
+    );
+  };
 
-      return (
-        <figure className={ A2HSWrapper }>
-          <figcaption>
-            👋 Welcome!<br/>
-            Add this app to your home screen for the best experience!
-          </figcaption>
-          {
-            isMobile.iOS()
-              ? <IOSInstructions />
-              : (
-                <button
-                  onClick={ this.install }
-                  className={ button }
-                >
-                  Add to Home Screen
-                </button>
-              )
-          }
-          <div className={ A2HSControls }>
-            <button
-              type="button"
-              aria-label="close notice"
-              onClick={ this.dismissNotification }
-            >
-              Maybe later
-            </button>
-          </div>
-        </figure>
-      );
+  render(): JSX.Element | null {
+    const { isOpen } = this.state;
+
+    if (!isOpen) {
+      return null;
     }
+
+    return (
+      <figure className={ A2HSWrapper }>
+        <figcaption>
+            👋 Selamat datang!<br/>
+            Tambahkan aplikasi ini ke perangkat Anda untuk pengalaman penggunaan aplikasi yang lebih baik!
+        </figcaption>
+        {
+          isMobile.iOS()
+            ? <IOSInstructions />
+            : (
+              <button
+                onClick={ this.install }
+                className={ button }
+              >
+                  Tambah ke perangkat
+              </button>
+            )
+        }
+        <div className={ A2HSControls }>
+          <button
+            type="button"
+            aria-label="close notice"
+            onClick={ this.dismissNotification }
+          >
+              Nanti saja
+          </button>
+        </div>
+      </figure>
+    );
+  }
 }
