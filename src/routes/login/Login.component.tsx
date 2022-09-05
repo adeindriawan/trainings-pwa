@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, SyntheticEvent } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import Link from 'next/link';
@@ -10,10 +10,18 @@ import { backendUrl } from 'config';
 
 export default function Login(): JSX.Element {
   const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const handleEmailFieldChange = (e: SyntheticEvent<HTMLInputElement>): void => {
+    setEmail(e.currentTarget.value);
+  };
+  const handlePasswordFieldChange = (e: SyntheticEvent<HTMLInputElement>): void => {
+    setPassword(e.currentTarget.value);
+  };
   const signIn = () => {
     axios.post(`${backendUrl}/login`, {
-      'email': 'aindriawan1@gmail.com',
-      'password': 'adeindriawan'
+      'email': email,
+      'password': password
     }).then(response => {
       const responseData = response.data.data;
       console.log(responseData);
@@ -168,7 +176,7 @@ export default function Login(): JSX.Element {
             </h1>
           </div>
           <div className="control block-cube block-input">
-            <input name="email" type="email" placeholder="email" />
+            <input name="email" type="email" placeholder="email" value={ email } onChange={ handleEmailFieldChange } />
             <div className="bg-top">
               <div className="bg-inner"></div>
             </div>
@@ -180,7 +188,7 @@ export default function Login(): JSX.Element {
             </div>
           </div>
           <div className="control block-cube block-input">
-            <input name="password" type="password" placeholder="password" />
+            <input name="password" type="password" placeholder="password" value={ password } onChange={ handlePasswordFieldChange } />
             <div className="bg-top">
               <div className="bg-inner"></div>
             </div>
