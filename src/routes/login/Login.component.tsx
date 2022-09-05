@@ -6,11 +6,12 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { updateUser } from 'stores/user';
 import { logIn } from 'stores/app';
+import { backendUrl } from 'config';
 
 export default function Login(): JSX.Element {
   const dispatch = useDispatch();
   const signIn = () => {
-    axios.post('http://academy.beta/api/login', {
+    axios.post(`${backendUrl}/login`, {
       'email': 'aindriawan1@gmail.com',
       'password': 'adeindriawan'
     }).then(response => {
