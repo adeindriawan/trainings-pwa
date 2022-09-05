@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable react/react-in-jsx-scope */
 import { useState } from 'react';
+import Router from 'next/router';
 import {
   Avatar,
   CardActions,
@@ -15,10 +16,13 @@ import {
   ExpandMore as ExpandMoreIcon,
   Favorite as FavoriteIcon,
   MoreVert as MoreVertIcon,
-  Share as ShareIcon
+  Share as ShareIcon,
+  ShoppingCart as ShoppingCartIcon
 } from '@mui/icons-material';
 import { red } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
+import { RootState } from 'stores';
+import { useSelector } from 'react-redux';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean
@@ -39,9 +43,18 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 // eslint-disable-next-line react/prop-types
 function TrainingCard({ title, shortDetail }: { title: string, shortDetail: string}): JSX.Element{
   const [expanded, setExpanded] = useState(false);
+  const app = useSelector((state: RootState) => state.app);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const handleCartButtonClick = () => {
+    if (app.authenticated) {
+      console.log('added to cart');
+    } else {
+      Router.push('/sign-up', undefined, { shallow: true });
+    }
   };
 
   return (
@@ -79,6 +92,9 @@ function TrainingCard({ title, shortDetail }: { title: string, shortDetail: stri
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
+        </IconButton>
+        <IconButton onClick={ handleCartButtonClick } >
+          <ShoppingCartIcon aria-label="add to cart" />
         </IconButton>
         <ExpandMore
           expand={ expanded }

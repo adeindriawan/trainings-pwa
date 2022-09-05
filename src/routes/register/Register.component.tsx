@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 
 export default function Register(): JSX.Element {
   const signUp = () => {
@@ -182,6 +183,7 @@ export default function Register(): JSX.Element {
         Register
             </div>
           </button>
+          <p>Sudah punya akun? Masuk </p><Link href="/login"><a>di sini</a></Link>
         </form>
       </main>
     </>

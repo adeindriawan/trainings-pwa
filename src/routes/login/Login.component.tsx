@@ -1,9 +1,31 @@
 import React from 'react';
 import Head from 'next/head';
+import Router from 'next/router';
+import Link from 'next/link';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { updateUser } from 'stores/user';
+import { logIn } from 'stores/app';
 
 export default function Login(): JSX.Element {
+  const dispatch = useDispatch();
   const signIn = () => {
-    console.log('sign in!');
+    axios.post('http://academy.beta/api/login', {
+      'email': 'aindriawan1@gmail.com',
+      'password': 'adeindriawan'
+    }).then(response => {
+      const responseData = response.data.data;
+      console.log(responseData);
+      const userData = response.data.data.user;
+      localStorage.setItem('accessToken', responseData.auth.accessToken);
+      localStorage.setItem('userId', userData.id);
+      localStorage.setItem('userFName', userData.fname);
+      localStorage.setItem('userLName', userData.lname);
+      localStorage.setItem('userEmail', userData.email);
+      dispatch(updateUser(userData));
+      dispatch(logIn(true));
+      Router.push('/trainings', undefined, { shallow: true });
+    });
   };
 
   return (
@@ -179,9 +201,10 @@ export default function Login(): JSX.Element {
               <div className="bg-inner"></div>
             </div>
             <div className="text">
-        Log In
+              Log In
             </div>
           </button>
+          <p>Belum punya akun? daftar <Link href="/register"><a>di sini</a></Link></p>
         </form>
       </main>
     </>

@@ -1,8 +1,11 @@
 import React, { memo, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Icon from 'components/icon';
 import Items from 'components/header/items';
 import Logo from 'components/header/logo';
 import ThemeToggler from 'components/header/themeToggler';
+import Cart from 'components/header/cart';
+import { RootState } from 'stores';
 import styles from './Header.module.scss';
 
 const OFFLINE = 'offline';
@@ -28,6 +31,7 @@ const handleNetworkChange = (): void => {
 
 export default memo(
   function Header(): JSX.Element {
+    const app = useSelector((state: RootState) => state.app);
     useEffect(() => {
       if (typeof window !== undefined) {
         handleNetworkChange();
@@ -56,6 +60,11 @@ export default memo(
             <div className={ headerControls }>
               <Logo />
               <ThemeToggler />
+              {
+                app.authenticated ?
+                  <Cart /> :
+                  ''
+              }
             </div>
             <Items />
           </nav>

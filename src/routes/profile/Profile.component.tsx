@@ -18,10 +18,11 @@ const {
 
 export default function Profile(): JSX.Element {
   const {
-    name,
-    bio,
-    avatar_url,
-    followers
+    id,
+    fname,
+    lname,
+    email,
+    avatar_url
   } = useUser();
 
   return (
@@ -39,10 +40,10 @@ export default function Profile(): JSX.Element {
           />
           <div className={ profileContent }>
             <h1>
-              <Placeholder content={ name } length="short" />
+              <Placeholder content={ fname } length="short" />
             </h1>
             <p>
-              <Placeholder content={ bio } length="long" />
+              <Placeholder content={ lname } length="long" />
             </p>
             <h3>
               <Icon
@@ -50,7 +51,7 @@ export default function Profile(): JSX.Element {
                 className={ followersIcon }
               />
               {
-                followers ?? <span className={ followersPlaceholder } />
+                email ?? <span className={ followersPlaceholder } />
               } Followers
             </h3>
           </div>
