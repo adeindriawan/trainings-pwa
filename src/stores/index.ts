@@ -5,14 +5,14 @@ import { user } from './user';
 import { app } from './app';
 import { notifications } from './notifications';
 import { pages } from './pages';
-import { trainings } from './trainings';
+import { courses } from './courses';
 
 const reducer = combineReducers({
   app,
   notifications,
   user,
   pages,
-  trainings
+  courses
 });
 
 export type RootState = ReturnType<typeof reducer>;

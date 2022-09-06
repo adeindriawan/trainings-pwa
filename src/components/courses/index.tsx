@@ -17,12 +17,14 @@ import {
   Favorite as FavoriteIcon,
   MoreVert as MoreVertIcon,
   Share as ShareIcon,
-  ShoppingCart as ShoppingCartIcon
+  ShoppingCart as ShoppingCartIcon,
+  RemoveShoppingCart as RemoveShoppingCartIcon
 } from '@mui/icons-material';
 import { red } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 import { RootState } from 'stores';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart, updateCart } from 'stores/app';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean
@@ -41,20 +43,38 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 // eslint-disable-next-line react/prop-types
-function TrainingCard({ title, shortDetail }: { title: string, shortDetail: string}): JSX.Element{
+function CourseCard({ id, title, shortDetail }: { id: number, title: string, shortDetail: string}): JSX.Element{
   const [expanded, setExpanded] = useState(false);
   const app = useSelector((state: RootState) => state.app);
+  const courses = useSelector((state: RootState) => state.courses);
+  const dispatch = useDispatch();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const handleCartButtonClick = () => {
+  const isCourseInCart = (id: number) => {
+    const doesExist = app.cart.find(item => item.id === id);
+
+    return doesExist;
+  };
+
+  const handleAddToCartButtonClick = (id: number) => {
     if (app.authenticated) {
-      console.log('added to cart');
+      const selectedCourse = courses.filter(course => {
+        return course.id === id;
+      });
+      dispatch(addToCart(selectedCourse[0]));
     } else {
       Router.push('/sign-up', undefined, { shallow: true });
     }
+  };
+
+  const handleRemoveFromCartButtonClick = (id: number) => {
+    const filtered = app.cart.filter(course => { 
+      return course.id !== id; 
+    });
+    dispatch(updateCart(filtered));
   };
 
   return (
@@ -93,9 +113,15 @@ function TrainingCard({ title, shortDetail }: { title: string, shortDetail: stri
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
-        <IconButton onClick={ handleCartButtonClick } >
-          <ShoppingCartIcon aria-label="add to cart" />
-        </IconButton>
+        {
+          isCourseInCart(id) ?
+            <IconButton onClick={ () => { handleRemoveFromCartButtonClick(id); } }>
+              <RemoveShoppingCartIcon aria-label="remove from cart" />
+            </IconButton> :
+            <IconButton onClick={ () => { handleAddToCartButtonClick(id); } } >
+              <ShoppingCartIcon aria-label="add to cart" />
+            </IconButton>
+        }
         <ExpandMore
           expand={ expanded }
           onClick={ handleExpandClick }
@@ -144,4 +170,4 @@ function TrainingCard({ title, shortDetail }: { title: string, shortDetail: stri
   );
 }
 
-export default TrainingCard;
+export default CourseCard;

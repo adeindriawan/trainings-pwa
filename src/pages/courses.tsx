@@ -5,23 +5,23 @@ import {
   Card,
   Grid
 } from '@mui/material';
-import TrainingCard from 'components/trainings';
-import { useTraining } from 'hooks/training';
+import CourseCard from 'components/courses';
+import { useCourse } from 'hooks/course';
 
-function Trainings(): JSX.Element {
+function Courses(): JSX.Element {
   
-  const dummyTraining = useTraining();
+  const dummyCourse = useCourse();
 
   return (
     <>
       <Head>
-        <title>Trainings</title>
+        <title>Courses</title>
       </Head>
       <main>
         <Box sx={ { flexGrow: 1 } }>
           <Grid container spacing={ 1 }>
             {
-              dummyTraining.map(v => (
+              dummyCourse.map(v => (
                 <Grid
                   item
                   xs={ 12 }
@@ -34,7 +34,8 @@ function Trainings(): JSX.Element {
                     justifyContent: 'space-between'
                   } }
                 >
-                  <TrainingCard
+                  <CourseCard
+                    id={ v.id }
                     title={ v.name }
                     shortDetail={ v.shortDetail }
                   />
@@ -48,4 +49,4 @@ function Trainings(): JSX.Element {
   );
 }
 
-export default Trainings;
+export default Courses;

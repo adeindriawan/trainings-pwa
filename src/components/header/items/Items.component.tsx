@@ -13,13 +13,13 @@ const {
 
 const linksWhenAunthenticated = [
   { name: 'Home', url: '/', alias: [] },
-  { name: 'Pelatihan', url: '/trainings', alias: [] },
+  { name: 'Pelatihan', url: '/courses', alias: [] },
   { name: 'Profil', url: '/profile', alias: [] }
 ];
 
 const linksWhenUnauntheticated = [
   { name: 'Beranda', url: '/', alias: [] },
-  { name: 'Pelatihan', url: '/trainings', alias: [] },
+  { name: 'Pelatihan', url: '/courses', alias: [] },
   { name: 'Daftar', url: '/sign-up', alias: ['/[page]'] }
 ];
 

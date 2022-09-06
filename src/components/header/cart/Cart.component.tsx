@@ -1,7 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from 'stores';
 import Icon from 'components/icon';
 import {injectClassNames} from 'utils/css';
-import styles from '../themeToggler/ThemeToggler.module.scss';
+import styles from '../themeToggler/ThemeToggler.module.scss'; // ganti dengan file style tersendiri
 
 const {
   themeToggler,
@@ -10,15 +12,21 @@ const {
 
 export default function Cart(): JSX.Element {
   const [isSettingMenuOpen, setIsSettingMenuOpen] = useState(false);
+  const app = useSelector((state: RootState) => state.app);
+  const [coursesCount, setCoursesCount] = useState(0);
 
   const themeTogglerWrapper = injectClassNames(
     styles.themeTogglerWrapper,
     [themeTogglerSettingsOpen, isSettingMenuOpen]
   );
 
-  const onCartButtonClick = () => {
+  const onCartButtonClick = (): void => {
     console.log('cart modal opened');
   };
+
+  useEffect(() => {
+    setCoursesCount(app.cart.length);
+  }, [app.cart]);
   
   return (
     <>
@@ -41,15 +49,15 @@ export default function Cart(): JSX.Element {
         ` }
       </style>
       <div className={ themeTogglerWrapper }>
-        { useMemo(() => (
-          <><button
+        <>
+          <button
             aria-label="show cart"
             className={ themeToggler }
             onClick={ onCartButtonClick }
           >
             <Icon asset="Cart" />
-          </button><span className="badge">1</span></>
-        ), []) }
+          </button><span className="badge">{ coursesCount }</span>
+        </>
       </div>
     </>
   );

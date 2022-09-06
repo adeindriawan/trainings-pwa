@@ -8,7 +8,7 @@ export default function Logo(): JSX.Element {
   return (
     <div className={ logo }>
       <Link href="/">
-                    Trainings
+        Courses
       </Link>
     </div>
   );

@@ -18,13 +18,12 @@ export default function Login(): JSX.Element {
   const handlePasswordFieldChange = (e: SyntheticEvent<HTMLInputElement>): void => {
     setPassword(e.currentTarget.value);
   };
-  const signIn = () => {
+  const signIn = (): void => {
     axios.post(`${backendUrl}/login`, {
       'email': email,
       'password': password
     }).then(response => {
       const responseData = response.data.data;
-      console.log(responseData);
       const userData = response.data.data.user;
       localStorage.setItem('accessToken', responseData.auth.accessToken);
       localStorage.setItem('userId', userData.id);
@@ -33,7 +32,7 @@ export default function Login(): JSX.Element {
       localStorage.setItem('userEmail', userData.email);
       dispatch(updateUser(userData));
       dispatch(logIn(true));
-      Router.push('/trainings', undefined, { shallow: true });
+      Router.push('/courses', undefined, { shallow: true });
     });
   };
 
